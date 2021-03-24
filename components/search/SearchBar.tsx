@@ -1,11 +1,11 @@
 import {useState} from "react";
-import useDebounce from "../../utils/debounce";
 import styles from './Search.module.scss';
+import useSearch from "../../utils/search";
 
 export default function SearchBar() {
 
     const [searchTerm, setSearchTerm] = useState<string>('')
-    const debouncedValue = useDebounce(searchTerm, 300)
+    const {results, isLoading, isError} = useSearch(searchTerm)
 
     return (
         <div className={styles.error}>
@@ -19,9 +19,17 @@ export default function SearchBar() {
                     id="search"
                 />
             </div>
+
             <div>
                 <p>Search term:</p>
-                <p>{JSON.stringify(debouncedValue)}</p>
+                {
+                    isLoading ?
+                        (<p>loading...</p>) :
+                        (<p>{JSON.stringify(results)}</p>)
+                }
+                {
+                    isError && <div>Error</div>
+                }
             </div>
         </div>
     )

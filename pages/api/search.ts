@@ -3,9 +3,14 @@
 import {NextApiRequest, NextApiResponse} from "next";
 
 type Data = {
-    name: string
+    data: any
 }
 
 export default (req: NextApiRequest, res: NextApiResponse<Data>) => {
-    res.status(200).json({name: 'John Doe'})
+
+    const {q} = req.query
+    if (!q || q.length < 2) {
+        return res.status(200).json({data: {}})
+    }
+    return res.status(200).json({data: {name: 'John Doe'}})
 }
