@@ -1,8 +1,9 @@
 import useDebounce from "./debounce";
 import {useCallback} from "react";
 import useSWR from "swr";
+import {SearchData} from "../pages/api/search";
 
-const useSearch = (query: string) => {
+const useSearch = <Data = any> (query: string) => {
 
     // Debounce search request to avoid overloading the api
     const debouncedQuery = useDebounce(query, 300)
@@ -12,8 +13,7 @@ const useSearch = (query: string) => {
         () => fetch(`/api/search?q=${debouncedQuery}`).then(response => response.json()),
         [debouncedQuery]
     )
-    const {data, error} = useSWR(['/api/search', debouncedQuery], fetchSearch)
-
+    const {data, error} = useSWR<Data>(['/api/search', debouncedQuery], fetchSearch)
     return {
         results: data,
         isLoading: !error && !data,

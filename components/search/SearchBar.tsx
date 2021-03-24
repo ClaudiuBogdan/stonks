@@ -1,12 +1,13 @@
 import {useState} from "react";
 import styles from './Search.module.scss';
 import useSearch from "../../utils/search";
+import {SearchData} from "../../pages/api/search";
+import SearchResults from "./SearchResults";
 
 export default function SearchBar() {
 
     const [searchTerm, setSearchTerm] = useState<string>('')
-    const {results, isLoading, isError} = useSearch(searchTerm)
-
+    const {results, isLoading, isError} = useSearch<SearchData>(searchTerm)
     return (
         <div className={styles.error}>
             <div className={styles.field}>
@@ -22,14 +23,9 @@ export default function SearchBar() {
 
             <div>
                 <p>Search term:</p>
-                {
-                    isLoading ?
-                        (<p>loading...</p>) :
-                        (<p>{JSON.stringify(results)}</p>)
-                }
-                {
-                    isError && <div>Error</div>
-                }
+                {isError && <div>Error</div>}
+                {isLoading && <div>Loading...</div>}
+                {results  && <SearchResults results={results.data}/>}
             </div>
         </div>
     )
