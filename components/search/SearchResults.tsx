@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import {SearchResult} from "../../pages/api/search";
 
 interface SearchResultProps {
@@ -10,7 +11,9 @@ export default function SearchResults({results}: SearchResultProps) {
             <ul>
                 {results.map(e => (
                     <li key={e.symbol}>
-                        {e.name}
+                        <Link href={`/markets/${encodeURIComponent(e.symbol)}`}>
+                            <a>{e.name}</a>
+                        </Link>
                     </li>
                 ))}
             </ul>
