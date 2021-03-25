@@ -44,20 +44,41 @@ export default function StockChart({}: StockChartProps) {
             data: usdEurMock
         }],
         exporting: {
-            buttons: {
-                customButton: {
-                    x: -300,
-                    onclick: function () {
-                        const chart = this as unknown as Highcharts.Chart
-                        if (!chart) {
-                            return
-                        }
-                        const axis = chart.get('xA0')
-                        toggleAverageLine(axis);
-                    },
-                    symbol: 'circle'
+            buttons: [{
+                text: 'Average',
+                x: -250,
+                y: -2,
+                onclick: function () {
+                    const chart = this as unknown as Highcharts.Chart
+                    if (!chart) {
+                        return
+                    }
+                    const axis = chart.get('xA0')
+                    toggleAverageLine(axis);
+                },
+                theme: {
+                    'stroke-width': 1,
+                    stroke: 'silver',
+                    r: 0,
+                    states: {
+                        hover: {
+                            fill: '#eee'
+                        },
+                    }
                 }
-            }
+                // customButton: {
+                //     x: -300,
+                //     onclick: function () {
+                //         const chart = this as unknown as Highcharts.Chart
+                //         if (!chart) {
+                //             return
+                //         }
+                //         const axis = chart.get('xA0')
+                //         toggleAverageLine(axis);
+                //     },
+                //     symbol: 'circle'
+                // }
+            }]
         }
     };
 
