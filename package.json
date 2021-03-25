@@ -9,6 +9,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "highcharts": "^9.0.1",
+    "highcharts-react-official": "^3.0.0",
     "isomorphic-unfetch": "^3.1.0",
     "next": "10.0.9",
     "react": "17.0.2",

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import {SearchResult} from "../../pages/api/search";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 import {MarketSuggestionData} from "../../pages/api/suggestions/markets";
