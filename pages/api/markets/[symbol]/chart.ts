@@ -1,6 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import mockResults from '../../../../mocks/companyChart.json'
-import {func} from "prop-types";
 
 export type ChartData = {
     data: {

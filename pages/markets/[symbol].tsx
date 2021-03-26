@@ -4,23 +4,29 @@ import fetcher from "../../utils/fetcher";
 import {StockChart} from "../../components/charts";
 import {ChartData} from "../api/markets/[symbol]/chart";
 import {SearchBar} from "../../components/search";
+import {MarketInfo} from "../../components/markets";
+import {MarketInfoData} from "../api/markets/[symbol]/info";
 
 export default function Markets() {
     const router = useRouter()
     const {symbol} = router.query
 
     // Get company info from API
-    const {data: marketInfo} = useSWR(`/api/markets/${symbol}/info`, fetcher)
+    const {data: marketInfoData} = useSWR<MarketInfoData>(`/api/markets/${symbol}/info`, fetcher)
     // Get company stock values
     const {data: chartData} = useSWR<ChartData>(`/api/markets/${symbol}/chart`, fetcher)
+    const marketInfo = marketInfoData && marketInfoData.data.info
     const stockValues = chartData && chartData.data.stockValues
+
     return (
         <div>
             <SearchBar/>
-            <h1>Market page</h1>
-            <h2>Company {symbol}</h2>
-            <p>{JSON.stringify(marketInfo)}</p>
-            {stockValues && <StockChart {...{stockValues}}/>}
+            {marketInfo && stockValues && (<>
+                <h1>{marketInfo.Name} ({marketInfo.Symbol})</h1>
+                <MarketInfo marketInfo={marketInfo}/>
+                <StockChart {...{stockValues}}/>
+            </>)}
+
         </div>
     )
 }

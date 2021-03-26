@@ -1,0 +1,23 @@
+.info-container {
+  display: flex;
+}
+
+.info-section {
+  width: 50%;
+}
+
+.summary-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.summary-item {
+  font-size: 0.9em;
+  display: flex;
+  justify-content: space-between;
+  width: 45%;
+  margin-right: 5%;
+  padding: 0.5em 0;
+  border-bottom: 1px solid #ccc
+}
+
