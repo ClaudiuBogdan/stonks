@@ -19,6 +19,7 @@
     "swr": "^0.5.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.13.10",
     "@testing-library/dom": "^7.30.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
