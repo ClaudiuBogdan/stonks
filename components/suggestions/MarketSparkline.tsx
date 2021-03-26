@@ -1,5 +1,6 @@
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
+import {green} from "colorette";
 
 const getOptions = () => {
     return {
@@ -53,10 +54,10 @@ const getOptions = () => {
         },
         plotOptions: {
             series: {
-                animation: true,
+                animation: false,
                 lineWidth: 1,
                 shadow: false,
-                fillOpacity: 0.25
+                fillOpacity: 1
             },
         },
         exporting: {
@@ -68,9 +69,34 @@ const getOptions = () => {
     };
 }
 
-export default function MarketSparkline() {
+interface MarketSparklineProps{
+    sparklines: number[]
+}
 
-    const options = getOptions()
+export default function MarketSparkline({sparklines}: MarketSparklineProps) {
+
+    const greenColor =  {
+        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+        stops: [
+            [0, '#7ff889'],
+            [1, '#b3ffb3']
+        ]
+    }
+
+    const redColor =  {
+        linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+        stops: [
+            [0, '#ff4f4f'],
+            [1, '#fdbfbf']
+        ]
+    }
+
+    const options = Highcharts.merge(getOptions(), {
+        series: [{
+            data: sparklines,
+            color: Math.random() > 0.5 ? redColor : greenColor
+        }],
+    })
 
     return (
         <div>
