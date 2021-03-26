@@ -1,22 +1,39 @@
+import {MouseEventHandler} from "react";
 import Link from 'next/link'
 import {SearchResult} from "../../pages/api/search";
+import styles from './Search.module.scss';
+import search from "../../utils/search";
 
 interface SearchResultProps {
-    results: SearchResult[]
+    results?: SearchResult[]
+    searchTerm?: string
+    onClick?: MouseEventHandler<any>
+    isLoading?: boolean
+    maxResults?: number
 }
 
-export default function SearchResults({results}: SearchResultProps) {
+export default function SearchResults({results, isLoading, onClick, searchTerm, maxResults = 5}: SearchResultProps) {
+    const hasNoResults = !isLoading && results && results.length === 0 && searchTerm
     return (
         <div>
-            <ul>
-                {results.map(e => (
-                    <li key={e.symbol}>
-                        <Link href={`/markets/${encodeURIComponent(e.symbol)}`}>
-                            <a>{e.name}</a>
-                        </Link>
-                    </li>
+            {results &&
+            results
+                .slice(maxResults)
+                .map(e => (
+                    <Link key={e.symbol} href={`/markets/${encodeURIComponent(e.symbol)}`}>
+                        <div
+                            className={styles['result-item']}
+                            onClick={onClick}>
+                            {e.name}
+                        </div>
+                    </Link>
                 ))}
-            </ul>
+
+            {hasNoResults && (
+                <div className={styles['result-no-data']}>
+                    No data
+                </div>
+            )}
         </div>
     )
 }

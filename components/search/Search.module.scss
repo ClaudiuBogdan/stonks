@@ -1,4 +1,28 @@
-.field {
-  color: white;
-  background-color: red;
+.search-container {
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  height: 50px;
+}
+
+.results-container {
+  width: 100%;
+  position: absolute;
+  background: #eee;
+}
+
+.result-item{
+  cursor: pointer;
+  padding: 1em;
+}
+
+.result-item:hover {
+  background-color: cornflowerblue;
+}
+
+.result-no-data{
+  padding: 2em;
+  text-align: center;
 }

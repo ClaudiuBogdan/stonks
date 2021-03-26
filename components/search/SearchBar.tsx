@@ -1,31 +1,36 @@
 import {useState} from "react";
 import styles from './Search.module.scss';
 import useSearch from "../../utils/search";
-import {SearchData} from "../../pages/api/search";
 import SearchResults from "./SearchResults";
 
 export default function SearchBar() {
 
     const [searchTerm, setSearchTerm] = useState<string>('')
-    const {results, isLoading, isError} = useSearch<SearchData>(searchTerm)
+    const {results, isLoading, isError} = useSearch(searchTerm)
+
     return (
-        <div className={styles.error}>
-            <div className={styles.field}>
-                <label htmlFor="search">Search for a book</label>
-            </div>
+        <div className={styles['search-container']}>
             <div className={styles.field}>
                 <input
-                    value={searchTerm}
-                    onChange={event => setSearchTerm(event.target.value)}
+                    className={styles['search-input']}
                     id="search"
+                    value={searchTerm}
+                    type='text'
+                    autoComplete='off'
+                    placeholder={'Search market'}
+                    onChange={event => setSearchTerm(event.target.value)}
                 />
             </div>
 
-            <div>
-                <p>Search term:</p>
+            <div className={styles['results-container']}>
                 {isError && <div>Error</div>}
-                {isLoading && <div>Loading...</div>}
-                {results  && <SearchResults results={results.data}/>}
+                <SearchResults
+                    {...{
+                        isLoading,
+                        results,
+                        searchTerm
+                    }}
+                    onClick={() => setSearchTerm('')}/>
             </div>
         </div>
     )

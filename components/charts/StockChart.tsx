@@ -18,6 +18,7 @@ export default function StockChart({stockValues}: StockChartProps) {
 
     const isAvgActiveRef = useRef(true)
 
+    // FIXME: recalculate average on search navigation
     const options = getChartOptions(isAvgActiveRef, stockValues)
 
     return (<div>
