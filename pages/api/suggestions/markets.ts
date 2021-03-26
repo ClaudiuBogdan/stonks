@@ -23,7 +23,7 @@ export default (req: NextApiRequest, res: NextApiResponse<MarketSuggestionData>)
     const {bestMatches} = mockResults
 
     //Parse mock results
-    const results = bestMatches.slice(0,3).map(e => ({
+    const results = bestMatches.slice(0,4).map(e => ({
         symbol: e["1. symbol"],
         name: e["2. name"],
         type: e["3. type"],

@@ -6,6 +6,7 @@ import {ChartData} from "../api/markets/[symbol]/chart";
 import {SearchBar} from "../../components/search";
 import {MarketInfo} from "../../components/markets";
 import {MarketInfoData} from "../api/markets/[symbol]/info";
+import {Footer} from "../../components/footer";
 
 export default function Markets() {
     const router = useRouter()
@@ -26,7 +27,7 @@ export default function Markets() {
                 <MarketInfo marketInfo={marketInfo}/>
                 <StockChart {...{stockValues}}/>
             </>)}
-
+            <Footer/>
         </div>
     )
 }

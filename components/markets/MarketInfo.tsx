@@ -7,7 +7,7 @@ interface MarketInfoProps {
 
 export default function MarketInfo({marketInfo}: MarketInfoProps) {
 
-    const marketInfoIndicators = [
+    const marketInfoIndicators: (keyof MarketInfoType)[]= [
         // "Address",
         "Name",
         "Symbol",
