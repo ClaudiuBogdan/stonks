@@ -23,7 +23,12 @@ export default function SearchResults({results, isLoading, onClick, searchTerm, 
                         <div
                             className={styles['result-item']}
                             onClick={onClick}>
-                            {e.name}
+                            <div style={{fontWeight: 500}}>
+                                {e.symbol}
+                            </div>
+                            <div style={{fontWeight: 300}}>
+                                {e.name}
+                            </div>
                         </div>
                     </Link>
                 ))}

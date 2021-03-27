@@ -1,16 +1,29 @@
 .search-container {
+  padding: 2em 25%;
   position: relative;
+  background: black;
 }
 
 .search-input {
   width: 100%;
   height: 50px;
+  padding-left: 2em;
+  font-size: 1em;
+  border: white;
+  border-radius: 8px;
+}
+
+.search-input:focus {
+  outline-width: 0;
 }
 
 .results-container {
-  width: 100%;
+  width: 50%;
   position: absolute;
   z-index: 1000;
+  margin-top: -8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   background: #eee;
 }
 
@@ -20,6 +33,7 @@
 }
 
 .result-item:hover {
+  color: white;
   background-color: cornflowerblue;
 }
 
