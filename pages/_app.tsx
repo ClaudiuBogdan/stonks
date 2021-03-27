@@ -1,8 +1,18 @@
-import '../styles/globals.css'
-import type { AppProps /*, AppContext */ } from 'next/app'
+// import Swiper core and required modules
+import SwiperCore, {Navigation, Autoplay} from 'swiper';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+import '../styles/globals.css'
+import 'swiper/swiper.scss';
+import 'swiper/components/navigation/navigation.scss';
+
+// install Swiper modules
+SwiperCore.use([Navigation, Autoplay]);
+
+
+import type {AppProps /*, AppContext */} from 'next/app'
+
+function MyApp({Component, pageProps}: AppProps) {
+    return <Component {...pageProps} />
 }
 
 export default MyApp

@@ -4,6 +4,7 @@ import fetcher from "../../utils/fetcher";
 import {MarketSuggestionData} from "../../pages/api/suggestions/markets";
 import MarketSparkline from "./MarketSparkline";
 import styles from './Suggestions.module.scss'
+import {Swiper, SwiperSlide} from "swiper/react";
 
 export default function MarketSuggestions() {
 
@@ -11,14 +12,21 @@ export default function MarketSuggestions() {
     const sections = results ? results.data.sections : []
     return (<div>
         <div>
-            {sections.map(section => (
-                <>
+            {sections.map((section, sectionIndex) => (
+                <div key={section.name}>
                     <h2>{section.name}</h2>
-                    <div
-                        key={section.name}
-                        className={styles['container']}>
+                    <Swiper
+                        className={styles['container']}
+                        slidesPerView={3}
+                        centeredSlides={true}
+                        loop={true}
+                        {...(sectionIndex === 0 && {
+                            slidesPerView: 3,
+                            spaceBetween: 50,
+                            autoplay: {delay: 3000, disableOnInteraction: false},
+                        })}>
                         {section.markets.map(e => (
-                            <div
+                            <SwiperSlide
                                 key={e.symbol}
                                 className={styles['market-container']}>
                                 <Link href={`/markets/${encodeURIComponent(e.symbol)}`}>
@@ -27,10 +35,10 @@ export default function MarketSuggestions() {
                                         <MarketSparkline sparklines={e.sparklines}/>
                                     </div>
                                 </Link>
-                            </div>
+                            </SwiperSlide>
                         ))}
-                    </div>
-                </>
+                    </Swiper>
+                </div>
             ))}
         </div>
 
