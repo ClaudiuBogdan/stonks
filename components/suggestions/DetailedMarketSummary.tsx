@@ -2,9 +2,10 @@ import Link from "next/link";
 import {useRef, useState} from "react";
 import MarketSparkline from "./MarketSparkline";
 import {MarketSuggestion} from "../../pages/api/suggestions/markets";
-import styles from './DetailedMarket.module.scss'
+import styles from './styles/DetailedMarket.module.scss'
 // @ts-ignore
 import ColorThief from "colorthief";
+import {getStockSummary} from "../../utils/stocks";
 
 interface TopMarketSuggestionProps {
     market: MarketSuggestion
@@ -24,7 +25,7 @@ export default function DetailedMarketSummary({market}: TopMarketSuggestionProps
         return values && "rgb(" + values.join(', ') + ")";
     }
 
-    const {currStockValue, stockDayVariation, stockDayPercentage, stockColor} = getStockStats(market.sparklines)
+    const {currStockValue, stockDayVariation, stockDayPercentage, stockColor} = getStockSummary(market.sparklines)
 
     return (<div>
         <Link href={`/markets/${encodeURIComponent(market.symbol)}`}>
@@ -32,6 +33,7 @@ export default function DetailedMarketSummary({market}: TopMarketSuggestionProps
             <div className={styles['logo-container']}>
                 <div style={{background: colorArrayToRGB(colorArrays)}}>
                     <img
+                        className={styles['logo']}
                         src={market.imagePath}
                         alt={"market logo " + market.name}
                         ref={imgRef}
@@ -73,15 +75,4 @@ export default function DetailedMarketSummary({market}: TopMarketSuggestionProps
             </div>
         </Link>
     </div>)
-}
-
-function getStockStats(stockValues: number[]) {
-    const currStockValue = stockValues[stockValues.length - 1]
-    const prevStockValue = stockValues[stockValues.length - 2]
-    const stockDayVariation = currStockValue - prevStockValue;
-    const stockDayPercentage = 100 * stockDayVariation / prevStockValue
-
-    const stockColor = stockDayVariation > 0 ? 'green' : 'red'
-
-    return {currStockValue, stockDayVariation, stockDayPercentage, stockColor}
 }

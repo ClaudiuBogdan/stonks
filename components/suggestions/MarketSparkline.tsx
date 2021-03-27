@@ -8,7 +8,6 @@ const getOptions = () => {
             borderWidth: 0,
             type: 'area',
             margin: [0, 0, 0, 0],
-            width: 200,
             height: 40,
             animation: false,
             style: {

@@ -44,7 +44,8 @@ export default (req: NextApiRequest, res: NextApiResponse<MarketSuggestionData>)
         timezone: e["7. timezone"],
         currency: e["8. currency"],
         matchScore: e["9. matchScore"],
-        sparklines: generateSparkLine()
+        sparklines: generateSparkLine(),
+        imagePath: '/assets/companies/70x70/placeholder.png'
     }))
 
     const images = [

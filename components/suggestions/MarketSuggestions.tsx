@@ -4,7 +4,7 @@ import {MarketSuggestionData} from "../../pages/api/suggestions/markets";
 import {Swiper, SwiperSlide} from "swiper/react";
 import DetailedMarketSummary from "./DetailedMarketSummary";
 import MarketSummary from "./MarketSummary";
-import styles from './Suggestions.module.scss'
+import styles from './styles/Suggestions.module.scss'
 
 export default function MarketSuggestions() {
 
@@ -17,7 +17,9 @@ export default function MarketSuggestions() {
         <div>
             {topSections.map((section) => (
                 <div key={section.name}>
-                    <h2>{section.name}</h2>
+                    <h2 className={styles['section-title']}>
+                        {section.name}
+                    </h2>
                     <Swiper
                         className={styles['container']}
                         //FIXME: Change value base on screen width
@@ -29,7 +31,7 @@ export default function MarketSuggestions() {
                         {section.markets.map(e => (
                             <SwiperSlide
                                 key={e.symbol}
-                                className={styles['market-container']}>
+                                className={styles['card-container']}>
                                 <DetailedMarketSummary market={e}/>
                             </SwiperSlide>
                         ))}
@@ -40,16 +42,19 @@ export default function MarketSuggestions() {
         <div>
             {sections.map((section, sectionIndex) => (
                 <div key={section.name}>
-                    <h2>{section.name}</h2>
+                    <h2 className={styles['section-title']}>
+                        {section.name}
+                    </h2>
                     <Swiper
                         className={styles['container']}
-                        slidesPerView={3}
+                        slidesPerView={8}
+                        spaceBetween={25}
                         centeredSlides={true}
                         loop={true}>
                         {section.markets.map(e => (
                             <SwiperSlide
                                 key={e.symbol}
-                                className={styles['market-container']}>
+                                className={styles['card-container']}>
                                 <MarketSummary market={e}/>
                             </SwiperSlide>
                         ))}

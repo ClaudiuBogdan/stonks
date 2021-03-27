@@ -1,6 +1,11 @@
 .logo-container {
   cursor: pointer;
   background: white;
+  text-align: center;
+  .logo{
+    height: 100%;
+    width: 150px;
+  }
 }
 
 .bottom-container {

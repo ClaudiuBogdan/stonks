@@ -12,7 +12,7 @@ export default function SearchBar() {
     const isFocusedDebounced = useDebounce<boolean>(isFocused, 300)
 
     const {results, isLoading, isError} = useSearch(searchTerm)
-    console.log('Is Focused: ', isFocused)
+
     return (
         <div className={styles['search-container']}>
 
