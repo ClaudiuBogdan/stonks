@@ -14,6 +14,7 @@ export type MarketSuggestion = {
     "currency": string,
     "matchScore": string,
     sparklines: number[],
+    imagePath?: string
 }
 
 
@@ -24,6 +25,7 @@ export type MarketSection = {
 
 export type MarketSuggestionData = {
     data: {
+        topSections?: MarketSection[],
         sections: MarketSection[]
     }
 }
@@ -45,11 +47,34 @@ export default (req: NextApiRequest, res: NextApiResponse<MarketSuggestionData>)
         sparklines: generateSparkLine()
     }))
 
-    const sections = [
+    const images = [
+        '/assets/companies/150x150/facebook.png',
+        '/assets/companies/150x150/google.png',
+        '/assets/companies/150x150/intel.png',
+        '/assets/companies/150x150/tesla.png',
+    ]
+
+    const topSections = [
         {
             name: 'Technology',
-            markets: results
+            markets: bestMatches.slice(0, 4).map((e, i) => ({
+                symbol: e["1. symbol"],
+                name: e["2. name"],
+                type: e["3. type"],
+                region: e["4. region"],
+                marketOpen: e["5. marketOpen"],
+                marketClose: e["6. marketClose"],
+                timezone: e["7. timezone"],
+                currency: e["8. currency"],
+                matchScore: e["9. matchScore"],
+                sparklines: generateSparkLine(),
+                imagePath: images[i]
+            }))
         },
+    ]
+
+    const sections = [
+
         {
             name: 'Consumer Goods',
             markets: results
@@ -64,14 +89,14 @@ export default (req: NextApiRequest, res: NextApiResponse<MarketSuggestionData>)
         }
     ]
 
-    return res.status(200).json({data: {sections}})
+    return res.status(200).json({data: {topSections, sections}})
 }
 
 function generateSparkLine() {
     const sparklines: number [] = []
 
     const maxDiff = 50
-    const totalValues = 200
+    const totalValues = 30
     let sparkValue = 200
 
     for (let i = 0; i < totalValues; i++) {

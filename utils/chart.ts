@@ -16,6 +16,8 @@ const getChartOptions = (isAvgActiveRef: MutableRefObject<boolean>, stockValues:
 
     return {
         chart: {
+            backgroundColor: null,
+            borderWidth: 1,
             events: {
                 load: function () {
                     const chart = this as unknown as Highcharts.Chart
@@ -42,6 +44,20 @@ const getChartOptions = (isAvgActiveRef: MutableRefObject<boolean>, stockValues:
             name: 'USD to EUR',
             data: stockValues
         }],
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        align: 'center',
+                        verticalAlign: 'bottom',
+                        layout: 'horizontal'
+                    }
+                }
+            }]
+        },
         exporting: {
             buttons: [{
                 text: 'Average',

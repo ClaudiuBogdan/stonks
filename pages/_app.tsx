@@ -1,7 +1,7 @@
 // import Swiper core and required modules
 import SwiperCore, {Navigation, Autoplay} from 'swiper';
 
-import '../styles/globals.css'
+import '../styles/globals.scss'
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 

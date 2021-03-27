@@ -24,6 +24,7 @@ export default function StockChart({stockValues, style}: StockChartProps) {
 
     return (<div {...{style}}>
         <HighchartsReact
+            containerProps={{ style: {padding: '0 1rem 0 0'} }}
             highcharts={Highcharts}
             constructorType={'stockChart'}
             options={options}
