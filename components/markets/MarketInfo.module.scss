@@ -1,5 +1,6 @@
 .info-container {
   display: flex;
+  font-size: 0.9em;
 }
 
 .info-section {
@@ -9,6 +10,11 @@
 .summary-container {
   display: flex;
   flex-wrap: wrap;
+}
+
+.description {
+  margin: 0;
+  font-weight: 300;
 }
 
 .summary-item {

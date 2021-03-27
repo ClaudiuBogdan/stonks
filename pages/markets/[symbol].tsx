@@ -22,11 +22,15 @@ export default function Markets() {
     return (
         <div>
             <SearchBar/>
-            {marketInfo && stockValues && (<>
-                <h1>{marketInfo.Name} ({marketInfo.Symbol})</h1>
-                <MarketInfo marketInfo={marketInfo}/>
-                <StockChart {...{stockValues}}/>
-            </>)}
+            {marketInfo && stockValues && (
+                <div style={{margin: '0 10%'}}>
+                    <MarketInfo
+                        style={{marginTop: '2em'}}
+                        marketInfo={marketInfo}/>
+                    <StockChart
+                        style={{marginTop: '2em'}}
+                        {...{stockValues}}/>
+                </div>)}
             <Footer/>
         </div>
     )
