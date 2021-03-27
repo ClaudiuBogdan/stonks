@@ -6,7 +6,7 @@ import {SearchData} from "../pages/api/search";
 const useSearch = (query: string) => {
 
     // Debounce search request to avoid overloading the api
-    const debouncedQuery = useDebounce(query, 300)
+    const debouncedQuery = useDebounce<string>(query, 300)
 
     // TODO add conditional request if searchTerm is empty string
     const {data, error} = useSWR<SearchData>(`/api/search?q=${debouncedQuery}`, fetcher)
