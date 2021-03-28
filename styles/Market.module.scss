@@ -11,15 +11,25 @@
   }
 }
 
+
 .chart-container {
   background: white;
   border-radius: 8px;
-  padding: 2em;
-  margin-top: 2em
+
+  padding: 2em 0;
+
+  @include md {
+    padding: 2em;
+    margin-top: 2em;
+  }
 }
 
 .market-title {
-  padding: 0
+  padding: 0 1em;
+
+  @include md {
+    padding: 0;
+  }
 }
 
 .chart {

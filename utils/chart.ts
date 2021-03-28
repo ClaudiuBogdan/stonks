@@ -2,7 +2,7 @@ import {MutableRefObject} from "react";
 import Highcharts from "highcharts/highstock";
 import {YAxisPlotLinesOptions} from "highcharts";
 
-const getChartOptions = (isAvgActiveRef: MutableRefObject<boolean>, stockValues: Array<number[]>) => {
+const getChartOptions = (isAvgActiveRef: MutableRefObject<boolean>, stockValues: Array<number[]>, currency = 'USD') => {
 
     const toggleAverageLine = (axis: any) => {
         if (isAvgActiveRef.current) {
@@ -14,6 +14,12 @@ const getChartOptions = (isAvgActiveRef: MutableRefObject<boolean>, stockValues:
         }
     }
 
+    function onChartChanged(chart: Highcharts.Chart) {
+        if (isAvgActiveRef.current) {
+            addAvgLine(chart.get('xA0'));
+        }
+    }
+
     return {
         chart: {
             backgroundColor: null,
@@ -21,9 +27,11 @@ const getChartOptions = (isAvgActiveRef: MutableRefObject<boolean>, stockValues:
             events: {
                 load: function () {
                     const chart = this as unknown as Highcharts.Chart
-                    if (isAvgActiveRef.current) {
-                        addAvgLine(chart.get('xA0'));
-                    }
+                    onChartChanged(chart)
+                },
+                redraw: function () {
+                    const chart = this as unknown as Highcharts.Chart
+                    onChartChanged(chart)
                 }
             }
         },
@@ -32,36 +40,21 @@ const getChartOptions = (isAvgActiveRef: MutableRefObject<boolean>, stockValues:
         }],
         xAxis: {
             id: 'xA0',
-            events: {
-                afterSetExtremes: function () {
-                    if (isAvgActiveRef.current) {
-                        addAvgLine(this);
-                    }
-                }
-            }
         },
         series: [{
-            name: 'USD to EUR',
+            name: currency,
             data: stockValues
         }],
-        responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 500
-                },
-                chartOptions: {
-                    legend: {
-                        align: 'center',
-                        verticalAlign: 'bottom',
-                        layout: 'horizontal'
-                    }
-                }
-            }]
+        rangeSelector: {
+            inputPosition: {
+                x: -30
+            }
         },
         exporting: {
             buttons: [{
                 text: 'Average',
-                x: -250,
+                align: 'right',
+                x: 0,
                 y: -2,
                 onclick: function () {
                     const chart = this as unknown as Highcharts.Chart
