@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from 'next/image'
-import {useState} from "react";
+import {useRef, useState} from "react";
 import MarketSparkline from "./MarketSparkline";
 import {MarketSuggestion} from "../../pages/api/suggestions/markets";
 import styles from './styles/DetailedMarket.module.scss'
@@ -15,16 +15,12 @@ interface TopMarketSuggestionProps {
 const imagePlaceholder = '/assets/companies/150x150/placeholder.png'
 
 export default function DetailedMarketSummary({market}: TopMarketSuggestionProps) {
-
     const [colorArrays, setColorArrays] = useState([238, 238, 238]);
+    const imgRef = useRef<HTMLImageElement>(null);
 
-    function getColorArrays(imgRef: any) {
+    function getColorArrays() {
         const colorThief = new ColorThief();
-        try {
-            setColorArrays(colorThief.getColor(imgRef));
-        } catch (e) {
-            //Image not loaded
-        }
+        setColorArrays(colorThief.getColor(imgRef.current));
     }
 
     function colorArrayToRGB(values?: number[]) {
@@ -38,14 +34,12 @@ export default function DetailedMarketSummary({market}: TopMarketSuggestionProps
 
             <div className={styles['logo-container']}>
                 <div style={{background: colorArrayToRGB(colorArrays)}}>
-                    <Image
+                    <img
                         className={styles['logo']}
-                        width={150}
-                        height={150}
-                        priority={true}
                         src={market.imagePath || imagePlaceholder}
                         alt={"market logo " + market.name}
-                        onLoad={(event) => getColorArrays(event.target)}/>
+                        ref={imgRef}
+                        onLoad={() => getColorArrays()}/>
                 </div>
 
                 <div className={styles['bottom-container']}>

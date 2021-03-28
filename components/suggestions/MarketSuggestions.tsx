@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
-import {MarketSuggestionData} from "../../pages/api/suggestions/markets";
+import {MarketSection, MarketSuggestionData} from "../../pages/api/suggestions/markets";
 import {Swiper, SwiperSlide} from "swiper/react";
 import DetailedMarketSummary from "./DetailedMarketSummary";
 import MarketSummary from "./MarketSummary";
@@ -8,15 +8,16 @@ import styles from './styles/Suggestions.module.scss'
 import {useWindowSize} from "../../utils/window";
 import {getDetailedCardsPerView, getSecondaryCardsPerView} from "./utils";
 
-export default function MarketSuggestions({initialSections, initialTopSections}: any) {
+interface MarketSuggestionsProps {
+    sections: MarketSection[]
+    topSections: MarketSection[]
+    windowSize: {
+        width: number
+        height: number
+    }
+}
 
-    console.log('Initial sections: ', initialSections, initialTopSections)
-
-    const windowSize = useWindowSize()
-    const {data: results, error} = useSWR<MarketSuggestionData>(`/api/suggestions/markets/`, fetcher)
-
-    const sections = results ? results.data.sections : []
-    const topSections = (results && results.data.topSections) ?? [];
+export default function MarketSuggestions({sections, topSections, windowSize}: MarketSuggestionsProps) {
 
     const detailedCardsPerView = getDetailedCardsPerView(windowSize.width)
     const secondaryCardsPerView = getSecondaryCardsPerView(windowSize.width)
@@ -30,7 +31,6 @@ export default function MarketSuggestions({initialSections, initialTopSections}:
                     </h2>
                     <Swiper
                         className={styles['container']}
-                        //FIXME: Change value base on screen width
                         slidesPerView={detailedCardsPerView}
                         centeredSlides={true}
                         loop={true}
@@ -72,11 +72,4 @@ export default function MarketSuggestions({initialSections, initialTopSections}:
         </div>
 
     </div>)
-}
-
-// This gets called at build time
-export async function getStaticProps() {
-
-    // Pass post data to the page via props
-    return {props: {initialSections: 'asd', initialTopSections: '123'}}
 }
