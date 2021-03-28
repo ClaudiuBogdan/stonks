@@ -1,7 +1,7 @@
 import {MouseEventHandler} from "react";
 import Link from 'next/link'
 import {SearchResult} from "../../pages/api/search";
-import styles from './Search.module.scss';
+import styles from './styles/Search.module.scss';
 
 interface SearchResultProps {
     results?: SearchResult[]

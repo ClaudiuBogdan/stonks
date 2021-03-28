@@ -1,5 +1,5 @@
 import {useState} from "react";
-import styles from './Search.module.scss';
+import styles from './styles/Search.module.scss';
 import useSearch from "../../utils/search";
 import SearchResults from "./SearchResults";
 import useDebounce from "../../utils/debounce";
