@@ -5,9 +5,12 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import DetailedMarketSummary from "./DetailedMarketSummary";
 import MarketSummary from "./MarketSummary";
 import styles from './styles/Suggestions.module.scss'
-import {breakpoints, useWindowSize} from "../../utils/window";
+import {useWindowSize} from "../../utils/window";
+import {getDetailedCardsPerView, getSecondaryCardsPerView} from "./utils";
 
-export default function MarketSuggestions() {
+export default function MarketSuggestions({initialSections, initialTopSections}: any) {
+
+    console.log('Initial sections: ', initialSections, initialTopSections)
 
     const windowSize = useWindowSize()
     const {data: results, error} = useSWR<MarketSuggestionData>(`/api/suggestions/markets/`, fetcher)
@@ -71,57 +74,9 @@ export default function MarketSuggestions() {
     </div>)
 }
 
-function getDetailedCardsPerView(size: number) {
+// This gets called at build time
+export async function getStaticProps() {
 
-    const defaultViews = 1
-
-    if (size > breakpoints.screenXXl) {
-        return 4
-    }
-
-    if (size > breakpoints.screenXl) {
-        return 3.5
-    }
-
-    if (size > breakpoints.screenLd) {
-        return 2.5
-    }
-
-    if (size > breakpoints.screenMd) {
-        return 2
-    }
-
-    if (size > breakpoints.screenSm) {
-        return 1.5
-    }
-
-    return defaultViews
-}
-
-
-function getSecondaryCardsPerView(size: number) {
-
-    const defaultViews = 2
-
-    if (size > breakpoints.screenXXl) {
-        return 8
-    }
-
-    if (size > breakpoints.screenXl) {
-        return 6.5
-    }
-
-    if (size > breakpoints.screenLd) {
-        return 4.5
-    }
-
-    if (size > breakpoints.screenMd) {
-        return 4
-    }
-
-    if (size > breakpoints.screenSm) {
-        return 3
-    }
-
-    return defaultViews
+    // Pass post data to the page via props
+    return {props: {initialSections: 'asd', initialTopSections: '123'}}
 }

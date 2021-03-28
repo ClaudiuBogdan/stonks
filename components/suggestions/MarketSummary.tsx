@@ -8,6 +8,8 @@ interface TopMarketSuggestionProps {
     market: MarketSuggestion
 }
 
+const imagePlaceholder = '/assets/companies/150x150/placeholder.png'
+
 export default function MarketSummary({market}: TopMarketSuggestionProps) {
 
     const {currStockValue, stockDayVariation, stockDayPercentage, stockColor} = getStockSummary(market.sparklines)
@@ -18,7 +20,7 @@ export default function MarketSummary({market}: TopMarketSuggestionProps) {
                 <div className={styles['top-section']}>
                     <img
                         className={styles['logo']}
-                        src={market.imagePath}
+                        src={market.imagePath ?? imagePlaceholder}
                         alt={"market logo " + market.name}/>
                     <div className={styles['details-container']}>
                         <span className={styles['symbol']}>

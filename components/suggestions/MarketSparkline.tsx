@@ -19,6 +19,9 @@ const getOptions = () => {
         title: {
             text: ''
         },
+        boost: {
+            useGPUTranslations: true
+        },
         credits: {
             enabled: false
         },
@@ -64,6 +67,8 @@ const getOptions = () => {
                 }
             },
             series: {
+                boostThreshold: 30,
+                gapSize: 1,
                 animation: false,
             }
         },
@@ -81,7 +86,6 @@ interface MarketSparklineProps {
 }
 
 export default function MarketSparkline({sparklines}: MarketSparklineProps) {
-
     const greenLine = '#0F0'
     const redLine = '#F00'
 
