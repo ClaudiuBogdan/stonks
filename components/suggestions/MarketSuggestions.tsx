@@ -1,11 +1,8 @@
-import useSWR from "swr";
-import fetcher from "../../utils/fetcher";
-import {MarketSection, MarketSuggestionData} from "../../pages/api/suggestions/markets";
+import {MarketSection} from "../../pages/api/suggestions/markets";
 import {Swiper, SwiperSlide} from "swiper/react";
 import DetailedMarketSummary from "./DetailedMarketSummary";
 import MarketSummary from "./MarketSummary";
 import styles from './styles/Suggestions.module.scss'
-import {useWindowSize} from "../../utils/window";
 import {getDetailedCardsPerView, getSecondaryCardsPerView} from "./utils";
 
 interface MarketSuggestionsProps {

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from 'next/image'
 import {useRef, useState} from "react";
 import MarketSparkline from "./MarketSparkline";
 import {MarketSuggestion} from "../../pages/api/suggestions/markets";
