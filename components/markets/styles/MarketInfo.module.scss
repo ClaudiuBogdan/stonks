@@ -1,0 +1,49 @@
+@import "styles/responsive";
+
+.info-container {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.9em;
+}
+
+.info-section {
+  width: 100%;
+
+  @include md {
+    width: 100%;
+  }
+  @include lg {
+    width: 50%;
+  }
+}
+
+.summary-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.description {
+  margin: 2em 0 0 0;
+  font-weight: 300;
+
+  @include lg {
+    margin: 0;
+  }
+}
+
+.summary-item {
+  font-size: 0.9em;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em 0;
+  border-bottom: 1px solid #ccc;
+
+  width: 100%;
+  margin-right: 0;
+
+  @include md {
+    width: 45%;
+    margin-right: 5%;
+  }
+}
+

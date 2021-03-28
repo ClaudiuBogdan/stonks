@@ -1,13 +1,13 @@
 import {CSSProperties} from "react";
 import {MarketInfo as MarketInfoType} from "../../pages/api/markets/[symbol]/info";
-import styles from './MarketInfo.module.scss';
+import styles from './styles/MarketInfo.module.scss';
 
 interface MarketInfoProps {
     marketInfo: MarketInfoType
     style?: CSSProperties
 }
 
-export default function MarketInfo({marketInfo, style}: MarketInfoProps) {
+export default function MarketInfo({marketInfo, style = {}}: MarketInfoProps) {
 
     const marketInfoIndicators: (keyof MarketInfoType)[] = [
         // "Address",
@@ -52,7 +52,7 @@ export default function MarketInfo({marketInfo, style}: MarketInfoProps) {
                             className={styles['summary-item']}
                             key={key}>
                             <div>
-                                {key}
+                                <span>{key}</span>
                             </div>
                             <div>
                                 <strong>{marketInfo[key]}</strong>
@@ -62,9 +62,6 @@ export default function MarketInfo({marketInfo, style}: MarketInfoProps) {
                 </div>
             </div>
             <div className={styles['info-section']}>
-                <h1 style={{marginTop: 0}}>
-                    {marketInfo.Name} ({marketInfo.Symbol})
-                </h1>
                 <p className={styles['description']}>
                     {marketInfo.Description}
                 </p>

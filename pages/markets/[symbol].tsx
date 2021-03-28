@@ -7,6 +7,7 @@ import {SearchBar} from "../../components/search";
 import {MarketInfo} from "../../components/markets";
 import {MarketInfoData} from "../api/markets/[symbol]/info";
 import {Footer} from "../../components/footer";
+import styles from "../../styles/Market.module.scss";
 
 export default function Markets() {
     const router = useRouter()
@@ -23,13 +24,20 @@ export default function Markets() {
         <div>
             <SearchBar/>
             {marketInfo && stockValues && (
-                <div style={{margin: '0 10%'}}>
-                    <MarketInfo
-                        style={{marginTop: '2em'}}
-                        marketInfo={marketInfo}/>
-                    <StockChart
-                        style={{marginTop: '2em'}}
-                        {...{stockValues}}/>
+                <div className={styles['container']}>
+                    <div className={styles['chart-container']}>
+                        <h1 className={styles['market-title']}>
+                            {marketInfo.Name} ({marketInfo.Symbol})
+                        </h1>
+                        <div className={styles['chart']}>
+                            <StockChart
+                                {...{stockValues}}/>
+                        </div>
+                    </div>
+                    <div className={styles['info-container']}>
+                        <MarketInfo
+                            marketInfo={marketInfo}/>
+                    </div>
                 </div>)}
             <Footer/>
         </div>
