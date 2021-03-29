@@ -6,8 +6,9 @@ import {ChartData} from "../api/markets/[symbol]/chart";
 import {SearchBar} from "../../components/search";
 import {MarketInfo} from "../../components/markets";
 import {MarketInfoData} from "../api/markets/[symbol]/info";
-import {Footer} from "../../components/footer";
 import styles from "../../styles/Market.module.scss";
+import {Loading} from "../../components/loading";
+import {Error} from "../../components/error";
 
 export default function Markets() {
     const router = useRouter()
@@ -16,9 +17,11 @@ export default function Markets() {
     // Get company info from API
     const {data: marketInfoData} = useSWR<MarketInfoData>(symbol ? `/api/markets/${symbol}/info` : null, fetcher)
     // Get company stock values
-    const {data: chartData} = useSWR<ChartData>(symbol ? `/api/markets/${symbol}/chart` : null, fetcher)
+    const {data: chartData, error} = useSWR<ChartData>(symbol ? `/api/markets/${symbol}/chart` : null, fetcher)
     const marketInfo = marketInfoData && marketInfoData.data.info
     const stockValues = chartData && chartData.data.stockValues
+
+    const isLoading = !error && !chartData
 
     return (
         <div>
@@ -39,6 +42,9 @@ export default function Markets() {
                             marketInfo={marketInfo}/>
                     </div>
                 </div>)}
+
+            {isLoading && <Loading/>}
+            {error && <Error message={'Something went wrong'}/>}
         </div>
     )
 }

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import {SearchResult} from "../../pages/api/search";
 import styles from './styles/Search.module.scss';
 import loaderStyles from './styles/Loader.module.scss';
+import {Loading} from "../loading";
 
 interface SearchResultProps {
     results?: SearchResult[]
@@ -49,7 +50,7 @@ export default function SearchResults({
                 </div>
             )}
 
-            {searchTerm && isLoading && <div className={loaderStyles['loader']}>Loading...</div>}
+            {searchTerm && isLoading && <Loading/>}
 
             {isError && <span>Error occurred</span>}
         </div>

@@ -7,6 +7,8 @@ import fetcher from "../utils/fetcher";
 import useSWR from 'swr';
 import {useWindowSize} from "../utils/window";
 import {Footer} from "../components/footer";
+import {Loading} from "../components/loading";
+import {Error} from "../components/error";
 
 export default function Home({initialSections = [], initialTopSections = []}: any) {
 
@@ -16,6 +18,8 @@ export default function Home({initialSections = [], initialTopSections = []}: an
     const {data: results, error} = useSWR<MarketSuggestionData>(`/api/suggestions/markets/`, fetcher)
     const sections = results ? results.data.sections : initialSections
     const topSections = (results && results.data.topSections) ?? initialTopSections;
+
+    const isLoading = !error && !results
 
     return (
         <div className={styles.container}>
@@ -29,6 +33,10 @@ export default function Home({initialSections = [], initialTopSections = []}: an
 
                 <MarketSuggestions {...{sections, topSections, windowSize}}/>
             </div>
+
+
+            {isLoading && <Loading/>}
+            {error && <Error message={'Something went wrong'}/>}
 
         </div>
     )
