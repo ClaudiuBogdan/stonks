@@ -14,9 +14,9 @@ export default function Markets() {
     const {symbol} = router.query
 
     // Get company info from API
-    const {data: marketInfoData} = useSWR<MarketInfoData>(`/api/markets/${symbol}/info`, fetcher)
+    const {data: marketInfoData} = useSWR<MarketInfoData>(symbol ? `/api/markets/${symbol}/info` : null, fetcher)
     // Get company stock values
-    const {data: chartData} = useSWR<ChartData>(`/api/markets/${symbol}/chart`, fetcher)
+    const {data: chartData} = useSWR<ChartData>(symbol ? `/api/markets/${symbol}/chart` : null, fetcher)
     const marketInfo = marketInfoData && marketInfoData.data.info
     const stockValues = chartData && chartData.data.stockValues
 

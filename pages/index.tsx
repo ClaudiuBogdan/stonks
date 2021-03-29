@@ -9,8 +9,6 @@ import {useWindowSize} from "../utils/window";
 
 export default function Home({initialSections = [], initialTopSections = []}: any) {
 
-    console.log('Initial sections: ', initialSections, initialTopSections)
-
     const windowSize = useWindowSize()
 
     //FIXME: Handle error

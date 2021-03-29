@@ -13,6 +13,7 @@ export default function SearchBar() {
 
     const {results, isLoading, isError} = useSearch(searchTerm)
 
+
     return (
         <div className={styles['search-container']}>
 
@@ -28,10 +29,10 @@ export default function SearchBar() {
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                     onKeyDown={(key) => {
-                        if(key.key === 'Esc' || key.key === 'Escape'){
+                        if (key.key === 'Esc' || key.key === 'Escape') {
                             setIsFocused(false)
                         }
-                    } }
+                    }}
                     onChange={event => setSearchTerm(event.target.value)}
                 />
             </div>

@@ -2,33 +2,41 @@
 
 import {NextApiRequest, NextApiResponse} from "next";
 import mockResults from '../../../mocks/searchResults.json'
+import fetcher from "../../../utils/fetcher";
+import {Config} from "../../../config";
 
 export type SearchResult = {
-    "symbol": string,
-    "name": string,
-    "type": string,
-    "region": string,
-    "marketOpen": string,
-    "marketClose": string,
-    "timezone": string,
-    "currency": string,
-    "matchScore": string
+    description: string,
+    displaySymbol: string,
+    symbol: string,
+    type: string
 }
 
 export type SearchData = {
     data: SearchResult[]
 }
 
-export default (req: NextApiRequest, res: NextApiResponse<SearchData>) => {
+export default async (req: NextApiRequest, res: NextApiResponse<SearchData>) => {
 
     const {q} = req.query
-    if (!q || q.length < 2) {
-        return res.status(200).json({data: []})
+
+    // FIXME: change search api for more accurate results
+    const searchUrl = `https://finnhub.io/api/v1/search?q=${q}&token=${Config.stockApi.finnhub.key}`
+
+    try {
+        const response = await fetcher(searchUrl)
+        const results = response.result.splice(0, 5)
+        return res.status(200).json({data: results})
+    } catch (e) {
+        return res.status(500)
     }
+}
+
+function getMockResults() {
+
     const {bestMatches} = mockResults
 
-    //Parse mock results
-    const results = bestMatches.map(e => ({
+    return bestMatches.map(e => ({
         symbol: e["1. symbol"],
         name: e["2. name"],
         type: e["3. type"],
@@ -39,6 +47,4 @@ export default (req: NextApiRequest, res: NextApiResponse<SearchData>) => {
         currency: e["8. currency"],
         matchScore: e["9. matchScore"]
     }))
-
-    return res.status(200).json({data: results})
 }

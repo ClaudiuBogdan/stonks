@@ -14,20 +14,22 @@ export default function MarketSummary({market}: TopMarketSuggestionProps) {
 
     const {currStockValue, stockDayVariation, stockDayPercentage, stockColor} = getStockSummary(market.sparklines)
 
+    const {summary: marketSummary} = market
+
     return (<div>
-        <Link href={`/markets/${encodeURIComponent(market.symbol)}`}>
+        <Link href={`/markets/${encodeURIComponent(marketSummary.symbol)}`}>
             <div className={styles['container']}>
                 <div className={styles['top-section']}>
                     <img
                         className={styles['logo']}
                         src={market.imagePath ?? imagePlaceholder}
-                        alt={"market logo " + market.name}/>
+                        alt={"market logo " + marketSummary.name}/>
                     <div className={styles['details-container']}>
                         <span className={styles['symbol']}>
-                            {market.symbol}
+                            {marketSummary.symbol}
                         </span>
                         <span className={styles['name']}>
-                            {market.name}
+                            {marketSummary.name}
                         </span>
                     </div>
                 </div>
@@ -42,7 +44,7 @@ export default function MarketSummary({market}: TopMarketSuggestionProps) {
                 </div>
                 <div className={styles['stock-value']}>
                     <span>
-                        {currStockValue.toFixed(2)} {market.currency}
+                        {currStockValue.toFixed(2)} {marketSummary.currency}
                     </span>
                 </div>
             </div>

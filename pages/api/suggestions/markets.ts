@@ -2,25 +2,32 @@
 
 import {NextApiRequest, NextApiResponse} from "next";
 import mockResults from '../../../mocks/searchResults.json'
+import firebaseDB from "../../../init/firebase";
 
 export type MarketSuggestion = {
-    "symbol": string,
-    "name": string,
-    "type": string,
-    "region": string,
-    "marketOpen": string,
-    "marketClose": string,
-    "timezone": string,
-    "currency": string,
-    "matchScore": string,
+    symbol: string,
+    summary: {
+        "symbol": string,
+        "name": string,
+        "type": string,
+        "region": string,
+        "marketOpen": string,
+        "marketClose": string,
+        "timezone": string,
+        "currency": string,
+        "matchScore": string,
+    }
     sparklines: number[],
     imagePath?: string
+    backgroundColor?: string
 }
 
 
 export type MarketSection = {
     name: string,
+    //TODO: add last update
     markets: MarketSuggestion[],
+    isTop?: boolean,
 }
 
 export type MarketSuggestionData = {
@@ -30,20 +37,29 @@ export type MarketSuggestionData = {
     }
 }
 
-export default (req: NextApiRequest, res: NextApiResponse<MarketSuggestionData>) => {
+export default async (req: NextApiRequest, res: NextApiResponse<MarketSuggestionData>) => {
     const {bestMatches} = mockResults
+
+    const snapshot = await firebaseDB.collection('markets').get();
+    snapshot.forEach((doc) => {
+        console.log("doc.id, '=>', doc.data())");
+    });
+
 
     //Parse mock results
     const results = bestMatches.slice(0, 4).map(e => ({
         symbol: e["1. symbol"],
-        name: e["2. name"],
-        type: e["3. type"],
-        region: e["4. region"],
-        marketOpen: e["5. marketOpen"],
-        marketClose: e["6. marketClose"],
-        timezone: e["7. timezone"],
-        currency: e["8. currency"],
-        matchScore: e["9. matchScore"],
+        summary: {
+            symbol: e["1. symbol"],
+            name: e["2. name"],
+            type: e["3. type"],
+            region: e["4. region"],
+            marketOpen: e["5. marketOpen"],
+            marketClose: e["6. marketClose"],
+            timezone: e["7. timezone"],
+            currency: e["8. currency"],
+            matchScore: e["9. matchScore"],
+        },
         sparklines: generateSparkLine(),
         imagePath: '/assets/companies/70x70/placeholder.png'
     }))
@@ -60,14 +76,17 @@ export default (req: NextApiRequest, res: NextApiResponse<MarketSuggestionData>)
             name: 'Technology',
             markets: bestMatches.slice(0, 4).map((e, i) => ({
                 symbol: e["1. symbol"],
-                name: e["2. name"],
-                type: e["3. type"],
-                region: e["4. region"],
-                marketOpen: e["5. marketOpen"],
-                marketClose: e["6. marketClose"],
-                timezone: e["7. timezone"],
-                currency: e["8. currency"],
-                matchScore: e["9. matchScore"],
+                summary: {
+                    symbol: e["1. symbol"],
+                    name: e["2. name"],
+                    type: e["3. type"],
+                    region: e["4. region"],
+                    marketOpen: e["5. marketOpen"],
+                    marketClose: e["6. marketClose"],
+                    timezone: e["7. timezone"],
+                    currency: e["8. currency"],
+                    matchScore: e["9. matchScore"],
+                },
                 sparklines: generateSparkLine(),
                 imagePath: images[i]
             }))

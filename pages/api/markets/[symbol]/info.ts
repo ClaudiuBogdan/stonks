@@ -1,5 +1,8 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import mockResults from '../../../../mocks/companyInfo.json'
+import {Config} from "../../../../config";
+import fetcher from "../../../../utils/fetcher";
+import firebaseDB from "../../../../init/firebase";
 
 export type MarketInfo = {
     "Symbol": string,
@@ -70,7 +73,42 @@ export type MarketInfoData = {
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+    try {
+        const {symbol: symbolQuery} = req.query
+        const symbol = String(symbolQuery)
 
-    const {symbol} = req.query
-    return res.status(200).json({data: {info: mockResults}})
+        if (!symbol || symbol === 'undefined') {
+            throw Error('Symbol required')
+        }
+
+        const info = await queryApiMarketInfo(symbol)
+
+        return res.status(200).json({data: {info}})
+    } catch (e) {
+        // FIXME: For demo purpose only
+        return res.status(200).json({data: {info: mockResults}})
+    }
+
+}
+
+async function queryApiMarketInfo(symbol: string) {
+
+    // Check if data exists in Firebase
+    const marketRef = firebaseDB.collection('markets').doc(symbol);
+    const marketDoc = await marketRef.get();
+
+    // Check info from cache
+    let info = marketDoc.exists && marketDoc.data() && marketDoc.data()!.info
+
+    if (!info) {
+        // Get info from 3rd party
+        const baseApiUrl = 'https://www.alphavantage.co/query?function=OVERVIEW&symbol'
+        const marketInfoUrl = `${baseApiUrl}=${symbol}&apikey=${Config.stockApi.alphavantage.key}`
+        info = await fetcher(marketInfoUrl)
+
+        // Update Firebase entry
+        await marketRef.set({info}, {merge: true});
+    }
+
+    return info
 }
