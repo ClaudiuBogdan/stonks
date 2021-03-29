@@ -6,6 +6,7 @@ import {MarketSuggestionData} from "./api/suggestions/markets";
 import fetcher from "../utils/fetcher";
 import useSWR from 'swr';
 import {useWindowSize} from "../utils/window";
+import {Footer} from "../components/footer";
 
 export default function Home({initialSections = [], initialTopSections = []}: any) {
 
@@ -23,10 +24,11 @@ export default function Home({initialSections = [], initialTopSections = []}: an
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
 
-            <SearchBar/>
+            <div className={styles['content-wrap']}>
+                <SearchBar/>
 
-            <MarketSuggestions {...{sections, topSections, windowSize}}/>
-            {/*<Footer/>*/}
+                <MarketSuggestions {...{sections, topSections, windowSize}}/>
+            </div>
 
         </div>
     )

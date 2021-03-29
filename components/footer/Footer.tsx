@@ -1,14 +1,14 @@
-import styles from "../../styles/Home.module.css";
+import Link from 'next/link'
 
 export default function Footer() {
     return (
-        <footer className={styles.footer}>
+        <footer>
             <a
-                href="#"
+                href="http://claudiuconstantinbogdan.me"
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                Footer
+                Developed by Claudiu C. Bogdan
             </a>
         </footer>
     )

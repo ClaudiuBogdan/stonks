@@ -9,9 +9,20 @@ SwiperCore.use([Autoplay]);
 
 
 import type {AppProps /*, AppContext */} from 'next/app'
+import styles from "../styles/Home.module.css";
+import {Footer} from "../components/footer";
 
 function MyApp({Component, pageProps}: AppProps) {
-    return <Component {...pageProps} />
+    return (<div className={'page-container'}>
+
+        <div className={'content-wrap'}>
+            <Component {...pageProps} />
+        </div>
+
+        <div className={'footer'}>
+            <Footer/>
+        </div>
+    </div>)
 }
 
 export default MyApp

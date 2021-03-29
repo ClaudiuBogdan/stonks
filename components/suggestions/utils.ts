@@ -62,7 +62,7 @@ export const getSparklineOptions = (sparklines: number[], colors: { line: string
             borderWidth: 0,
             type: 'area',
             margin: [0, 0, 0, 0],
-            height: 40,
+            height: 60,
             animation: false,
             style: {
                 overflow: 'visible'

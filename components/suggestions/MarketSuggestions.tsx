@@ -54,7 +54,7 @@ export default function MarketSuggestions({sections, topSections, windowSize}: M
                         className={styles['container']}
                         slidesPerView={secondaryCardsPerView}
                         spaceBetween={25}
-                        centeredSlides={true}
+                        centeredSlides={false}
                         loop={true}>
                         {section.markets.map(e => (
                             <SwiperSlide

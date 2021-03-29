@@ -39,7 +39,6 @@ export default function Markets() {
                             marketInfo={marketInfo}/>
                     </div>
                 </div>)}
-            <Footer/>
         </div>
     )
 }
