@@ -49,7 +49,7 @@ function getMockStockValues() {
 }
 
 
-async function queryApiMarketStockValues(symbol: string) {
+export async function queryApiMarketStockValues(symbol: string): Promise<Array<number[]>> {
 
 
     // Check if data exists in Firebase
@@ -66,6 +66,10 @@ async function queryApiMarketStockValues(symbol: string) {
         const timeSeriesUrl = `${baseApiUrl}=${symbol}&apikey=${Config.stockApi.alphavantage.key}`
 
         const response = await fetcher(timeSeriesUrl)
+
+        if (!response || !response['Time Series (Daily)']) {
+            return []
+        }
 
         const daysWithValues = response['Time Series (Daily)']
         const daysKeys = Object.keys(daysWithValues) as any

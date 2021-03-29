@@ -14,6 +14,13 @@ export default function MarketSummary({market}: TopMarketSuggestionProps) {
 
     const {currStockValue, stockDayVariation, stockDayPercentage, stockColor} = getStockSummary(market.sparklines)
 
+    // If market not have time series data, return error
+    if (!currStockValue) {
+        return (
+            <div>Error</div>
+        )
+    }
+
     const {summary: marketSummary} = market
 
     return (<div>

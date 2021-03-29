@@ -91,7 +91,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 }
 
-async function queryApiMarketInfo(symbol: string) {
+export async function queryApiMarketInfo(symbol: string) {
 
     // Check if data exists in Firebase
     const marketRef = firebaseDB.collection('markets').doc(symbol);

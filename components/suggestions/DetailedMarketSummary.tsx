@@ -27,6 +27,12 @@ export default function DetailedMarketSummary({market}: TopMarketSuggestionProps
     }
 
     const {currStockValue, stockDayVariation, stockDayPercentage, stockColor} = getStockSummary(market.sparklines)
+    // If market not have time series data, return error
+    if (!currStockValue) {
+        return (
+            <div>Error</div>
+        )
+    }
 
     return (<div>
         <Link href={`/markets/${encodeURIComponent(market.symbol)}`}>
@@ -36,7 +42,7 @@ export default function DetailedMarketSummary({market}: TopMarketSuggestionProps
                     <img
                         className={styles['logo']}
                         src={market.imagePath || imagePlaceholder}
-                        alt={"market logo " + market.name}
+                        alt={"market logo " + market.summary.name}
                         ref={imgRef}
                         onLoad={() => getColorArrays()}/>
                 </div>
@@ -50,7 +56,7 @@ export default function DetailedMarketSummary({market}: TopMarketSuggestionProps
                             </span>
                             <span className={styles['separator']}>|</span>
                             <span className={styles['market-name']}>
-                                {market.name}
+                                {market.summary.name}
                             </span>
                         </div>
 
